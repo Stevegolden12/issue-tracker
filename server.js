@@ -4,6 +4,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var expect = require('chai').expect;
 const helmet = require('helmet');
+const db = require('mongodb')
+const mongoose = require('mongoose');
 var cors = require('cors');
 
 var apiRoutes = require('./routes/api.js');
@@ -12,15 +14,23 @@ var runner = require('./test-runner');
 
 var app = express();
 
+mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost:27017/IssueTracker', { useNewUrlParser: true }, (err) => {
+  if (!err) {
+    console.log("Database connection successful")
+  } else {
+    console.log("Database is not connected: " + err)
+  }
+})
+
 app.use(helmet.xssFilter())
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({ origin: '*' })); //For FCC testing purposes only
 
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
 
 //Sample front-end
 app.route('/:project/')
@@ -33,6 +43,12 @@ app.route('/')
   .get(function (req, res) {
     res.sendFile(process.cwd() + '/views/index.html');
   });
+
+//Database route
+app.post('./api/issues/issue-tracker', function (req, res){ 
+    console.log("testing")
+    res.send("Testing")
+  })
 
 //For FCC testing purposes
 fccTestingRoutes(app);
@@ -48,7 +64,7 @@ app.use(function (req, res, next) {
 });
 
 //Start our server and tests!
-app.listen(process.env.PORT || 3000, function () {
+app.listen(/*process.env.PORT ||*/ 3000, function () {
   console.log("Listening on port " + process.env.PORT);
   if (process.env.NODE_ENV === 'test') {
     console.log('Running Tests...');

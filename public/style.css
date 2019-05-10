@@ -14,8 +14,9 @@ body {
   border: 2px solid black;
 }
 
-.closed {
-  background-color: lightgrey;
+
+.finished {
+  color: lightgrey;
 }
 
 .id {
