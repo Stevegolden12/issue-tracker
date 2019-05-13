@@ -32,10 +32,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.route('/api/issues/issueTracker')
+app.route('/api/issues/createIssue/')
   .get(function (req, res) {
-    console.log("testing")
-    res.send("Testing")
+    
+    console.log("create issue")
+    res.send("create issue")
+  })
+
+app.route('/api/issues/updateIssue/')
+  .get(function (req, res) {
+
+    console.log("update issue")
+    res.send("update issue")
+  })
+
+app.route('/api/issues/deleteIssue/')
+  .get(function (req, res) {
+
+    console.log("delete issue")
+    res.send("delete Id")
   })
 
 //Sample front-end
