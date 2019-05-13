@@ -32,23 +32,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
+app.route('/api/issues/issueTracker')
+  .get(function (req, res) {
+    console.log("testing")
+    res.send("Testing")
+  })
+
 //Sample front-end
 app.route('/:project/')
-  .get(function (req, res) {
-    res.sendFile(process.cwd() + '/views/issue.html');
+  .get(function (req, res) { 
+     res.sendFile(process.cwd() + '/views/issue.html');
   });
 
 //Index page (static HTML)
 app.route('/')
   .get(function (req, res) {
-    res.sendFile(process.cwd() + '/views/index.html');
+     res.sendFile(process.cwd() + '/views/index.html');    
   });
 
 //Database route
-app.post('./api/issues/issue-tracker', function (req, res){ 
-    console.log("testing")
-    res.send("Testing")
-  })
+
 
 //For FCC testing purposes
 fccTestingRoutes(app);
@@ -64,8 +67,9 @@ app.use(function (req, res, next) {
 });
 
 //Start our server and tests!
-app.listen(/*process.env.PORT ||*/ 3000, function () {
-  console.log("Listening on port " + process.env.PORT);
+//process.env.PORT ||
+app.listen(3000, function () {
+  console.log("Listening on port " + 3000 /*process.env.PORT*/);
   if (process.env.NODE_ENV === 'test') {
     console.log('Running Tests...');
     setTimeout(function () {
