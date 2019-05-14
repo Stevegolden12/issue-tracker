@@ -16,6 +16,7 @@
     "mocha": "^6.1.4",
     "mongodb": "^3.2.4",
     "mongoose": "^5.5.6",
+    "multer": "^1.4.1",
     "zombie": "^6.1.4"
   },
   "engines": {
