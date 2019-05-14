@@ -6,7 +6,10 @@ var expect = require('chai').expect;
 const helmet = require('helmet');
 const db = require('mongodb')
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 var cors = require('cors');
+const multer = require('multer');
+const upload = multer();
 
 var apiRoutes = require('./routes/api.js');
 var fccTestingRoutes = require('./routes/fcctesting.js');
@@ -22,6 +25,16 @@ mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost:27017/IssueTracker
   }
 })
 
+var issueSchema = new Schema({
+  title: String,
+  comments: String, 
+  user: String,
+  assigned: String,
+  status: String
+});
+
+var issue = mongoose.model('issue', issueSchema)
+
 app.use(helmet.xssFilter())
 app.use('/public', express.static(process.cwd() + '/public'));
 
@@ -32,25 +45,35 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.route('/api/issues/createIssue/')
-  .get(function (req, res) {
-    
-    console.log("create issue")
-    res.send("create issue")
-  })
+app.route('/api/issues/issueTracker/')
+  .post(upload.array(), function (req, res, next) {
 
-app.route('/api/issues/updateIssue/')
-  .get(function (req, res) {
+    if (req.body.hasOwnProperty("create_issue_title")) {
+      console.log("create issue")
+      var newIssue = new issue({
+        title: req.body.create_issue_title,
+        comments: req.body.issue_text,
+        user: req.body.created_by,
+        assigned: req.body.assigned_to,
+        status: req.body.status_text,
+      })
 
-    console.log("update issue")
-    res.send("update issue")
-  })
-
-app.route('/api/issues/deleteIssue/')
-  .get(function (req, res) {
-
-    console.log("delete issue")
-    res.send("delete Id")
+      newIssue.save(newIssue, function (err, issue) {
+        console.log("User when saving is: " + issue._id);
+        if (err) { return console.error(err) }
+        else {
+          res.send('Your userId to access the tracker is: ' + issue._id);
+        }
+      })
+    } else if (req.body.hasOwnProperty("update_id")) {
+      console.log("update issue")
+    } else if (req.body.hasOwnProperty("delete_id")) {
+      console.log("delete issue")
+    }
+   
+    //console.log("create issue")
+    //res.send("create issue")
+      res.json(req.body)
   })
 
 //Sample front-end

@@ -21,8 +21,8 @@
       <h3>Submit a new issue:</h3>
     </div>
     <!--Change id to "testIsusue" from "newIssue" because think script code below was not letting it work -->
-    <form id="createIssue" method="get" action="/api/issues/createIssue">
-      <input type="text" name="issue_title" placeholder="*Title" style="width: 320px; margin-bottom: 3px;" required=''><br>
+    <form id="createIssue" method="post" action="/api/issues/issueTracker/">
+      <input type="text" name="create_issue_title" placeholder="*Title" style="width: 320px; margin-bottom: 3px;" required=''><br>
       <textarea type="text" name="issue_text" placeholder="*Text" style="width: 320px; height: 100px;" required=''></textarea><br>
       <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''>
       <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px">
@@ -31,8 +31,8 @@
     </form>
     <br>
     <h3>Update issue on <i>apitest</i> (Change any or all to update issue on the _id supplied)</h3>
-    <form id="updateIssue" method="get" action="/api/issues/updateIssue">
-      <input type="text" name="_id" placeholder="*_id" style="width: 320px" required=''><br>
+    <form id="updateIssue" method="post" action="/api/issues/issueTracker/">
+      <input type="text" name="update_id" placeholder="*_id" style="width: 320px" required=''><br>
       <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 320px"><br>
       <textarea type="text" name="issue_text" placeholder="(opt)Text" style="width: 320px; height: 100px"></textarea><br>
       <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 100px">
@@ -42,8 +42,8 @@
       <button type="submit">Update Issue</button>
     </form><br>
     <h3>Delete issue on <i>apitest</i></h3>
-    <form id="deleteIssue" method="get" action="/api/issues/deleteIssue">
-      <input type="text" name="_id" placeholder="_id" style="width: 320px" required=''><br>
+    <form id="deleteIssue" method="post" action="/api/issues/issueTracker/">
+      <input type="text" name="delete_id" placeholder="_id" style="width: 320px" required=''><br>
       <button type="submit">Delete Issue</button>
     </form>
 
