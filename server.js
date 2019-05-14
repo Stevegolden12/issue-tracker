@@ -10,6 +10,7 @@ const Schema = mongoose.Schema;
 var cors = require('cors');
 const multer = require('multer');
 const upload = multer();
+const shortid = require('shortid');
 
 var apiRoutes = require('./routes/api.js');
 var fccTestingRoutes = require('./routes/fcctesting.js');
@@ -26,6 +27,10 @@ mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost:27017/IssueTracker
 })
 
 var issueSchema = new Schema({
+  _id: {
+    type: String,
+    default: shortid.generate
+  },
   title: String,
   comments: String, 
   user: String,
@@ -51,6 +56,7 @@ app.route('/api/issues/issueTracker/')
     if (req.body.hasOwnProperty("create_issue_title")) {
       console.log("create issue")
       var newIssue = new issue({
+        _id: shortid.generate(),
         title: req.body.create_issue_title,
         comments: req.body.issue_text,
         user: req.body.created_by,
@@ -59,10 +65,9 @@ app.route('/api/issues/issueTracker/')
       })
 
       newIssue.save(newIssue, function (err, issue) {
-        console.log("User when saving is: " + issue._id);
-        if (err) { return console.error(err) }
-        else {
-          res.send('Your userId to access the tracker is: ' + issue._id);
+        console.log("ISSUE: " + issue._id)
+        if (err) { return console.log(err) }
+        else {          
         }
       })
     } else if (req.body.hasOwnProperty("update_id")) {
