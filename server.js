@@ -68,63 +68,66 @@ app.route('/api/issues/issueTracker/')
 
       newIssue.save(newIssue, function (err, issue) {
         console.log("ISSUE: " + issue._id)
-        if (err) { return console.log(err) }
-        else {          
+        if (err) {
+           res.send("Issue could not be created")
         }
+        else {   
+          res.send("Issue successfully created. <br> Issue id number is: " + issue._id)
+        }       
       })
-    } else if (req.body.hasOwnProperty("update_id")) {
-      console.log("update issue")
      
+    
+    } else if (req.body.hasOwnProperty("update_id")) {     
       var close = true;
        console.log("req.body.open is: " + req.body.open)
-      if (req.body.open === undefined) {
-        console.log("trigger check mark-no check mark")
+      if (req.body.open === undefined) { 
         close = false;
-      } else if (req.body.open === false) {
-        console.log("trigger check mark - check mark")
+      } else if (req.body.open === false) {     
         close = true;
       }   
-       console.log("closed: " + close)
+    
 
-      issue.findById(req.body.update_id, {new: true }, function (err, iss) {
-        issue.findOneAndUpdate(
-          { _id: iss._id },
-          {
-            $set: {
+      issue.findById(req.body.update_id, { new: true }, function (err, iss) { 
+        if (iss) {
+          issue.findOneAndUpdate(
+            { _id: iss._id },
+            {
+              $set: {
                 title: req.body.create_issue_title,
                 comments: req.body.issue_text,
                 user: req.body.created_by,
                 assigned: req.body.assigned_to,
                 status: req.body.status_text,
                 closed: close
-            }
-          },
-          { new: true },
-          (err, docs) =>{
-            if (err) {
-              console.log("error: " + err);
-            } else {
-              console.log("success: " + docs);
-            }
-          
-          });
-       })
-      
+              }
+            },
+            { new: true },
+            (err, docs) => {
+              if (err) {
+              } else {    
+                res.send("Successfully updated.")
+              }
+
+            });
+        } else {
+          res.send("Could not update id " + req.body.update_id)
+        }
+       }) 
 
     } else if (req.body.hasOwnProperty("delete_id")) {
-      console.log("delete issue")
-      issue.findByIdAndDelete({ _id: req.body.delete_id }, function (err) {
-        if (err) {
-          console.log("error: " + err)       
+      issue.findById(req.body.delete_id, { new: true }, function (err, iss) {      
+       if (iss !== null) {
+          issue.findByIdAndDelete({ _id: req.body.delete_id }, function (err) {        
+           res.send("successful deletion")       
+          })
         } else {
-          console.log("successful deletion")
+          res.send("Could not delete id " + req.body.delete_id)
         }
       })
-    }
-   
-    //console.log("create issue")
-    //res.send("create issue")
-      res.json(req.body)
+    }  
+  })
+  .get(upload.array(), function (req, res, next) {
+
   })
 
 //Sample front-end

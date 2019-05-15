@@ -66,7 +66,8 @@
           url: url,
           success: function(data)
           {
-            var issues= [];
+            var issues = [];
+            
             data.forEach(function(ele) {
               console.log(ele);
               var openstatus;
@@ -90,7 +91,7 @@
             $('#issueDisplay').html(issues.join(''));
           }
         });
-
+        
         $('#newIssue').submit(function(e){
           e.preventDefault();
           $(this).attr('action', "/api/issues/" + currentProject);
@@ -101,7 +102,7 @@
             success: function(data) { window.location.reload(true); }
           });
         });
-
+        
         $('#issueDisplay').on('click','.closeIssue', function(e) {
           var url = "/api/issues/"+currentProject;
           $.ajax({
@@ -112,6 +113,7 @@
           });
           e.preventDefault();
         });
+        /*
         $('#issueDisplay').on('click','.deleteIssue', function(e) {
           var url = "/api/issues/"+currentProject;
           $.ajax({
@@ -123,6 +125,7 @@
           e.preventDefault();
         });
       });
+      */
   </script>
 </body>
 </html>
