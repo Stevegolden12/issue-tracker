@@ -69,25 +69,25 @@ app.route('/api/issues/issueTracker/')
       newIssue.save(newIssue, function (err, issue) {
         console.log("ISSUE: " + issue._id)
         if (err) {
-           res.send("Issue could not be created")
+          res.send("Issue could not be created")
         }
-        else {   
+        else {
           res.send("Issue successfully created. <br> Issue id number is: " + issue._id)
-        }       
+        }
       })
-     
-    
-    } else if (req.body.hasOwnProperty("update_id")) {     
-      var close = true;
-       console.log("req.body.open is: " + req.body.open)
-      if (req.body.open === undefined) { 
-        close = false;
-      } else if (req.body.open === false) {     
-        close = true;
-      }   
-    
 
-      issue.findById(req.body.update_id, { new: true }, function (err, iss) { 
+
+    } else if (req.body.hasOwnProperty("update_id")) {
+      var close = true;
+      console.log("req.body.open is: " + req.body.open)
+      if (req.body.open === undefined) {
+        close = false;
+      } else if (req.body.open === false) {
+        close = true;
+      }
+
+
+      issue.findById(req.body.update_id, { new: true }, function (err, iss) {
         if (iss) {
           issue.findOneAndUpdate(
             { _id: iss._id },
@@ -104,7 +104,7 @@ app.route('/api/issues/issueTracker/')
             { new: true },
             (err, docs) => {
               if (err) {
-              } else {    
+              } else {
                 res.send("Successfully updated.")
               }
 
@@ -112,23 +112,35 @@ app.route('/api/issues/issueTracker/')
         } else {
           res.send("Could not update id " + req.body.update_id)
         }
-       }) 
+      })
 
     } else if (req.body.hasOwnProperty("delete_id")) {
-      issue.findById(req.body.delete_id, { new: true }, function (err, iss) {      
-       if (iss !== null) {
-          issue.findByIdAndDelete({ _id: req.body.delete_id }, function (err) {        
-           res.send("successful deletion")       
+      issue.findById(req.body.delete_id, { new: true }, function (err, iss) {
+        if (iss !== null) {
+          issue.findByIdAndDelete({ _id: req.body.delete_id }, function (err) {
+            res.send("successful deletion")
           })
         } else {
           res.send("Could not delete id " + req.body.delete_id)
         }
       })
-    }  
+    } else if (req.body.hasOwnProperty("search_id")) {
+      res.send("Searching in database")
+      //Going to go through the checkboxes and put in the '_id title' section below in find()
+      issue.find({
+        _id: /./,
+        title: /./,
+        comments: /./,
+        user: /./,
+        assigned: /./,
+        status: /./,
+        closed: /./,
+      },
+        '_id title', function (err, docs) { })
+    }
+    
   })
-  .get(upload.array(), function (req, res, next) {
 
-  })
 
 //Sample front-end
 app.route('/:project/')
