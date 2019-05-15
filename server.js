@@ -35,10 +35,11 @@ var issueSchema = new Schema({
   comments: String, 
   user: String,
   assigned: String,
-  status: String
+  status: String,
+  closed: Boolean
 });
 
-var issue = mongoose.model('issue', issueSchema)
+var issue = mongoose.model('issues', issueSchema)
 
 app.use(helmet.xssFilter())
 app.use('/public', express.static(process.cwd() + '/public'));
@@ -62,6 +63,7 @@ app.route('/api/issues/issueTracker/')
         user: req.body.created_by,
         assigned: req.body.assigned_to,
         status: req.body.status_text,
+        closed: false
       })
 
       newIssue.save(newIssue, function (err, issue) {
@@ -72,8 +74,52 @@ app.route('/api/issues/issueTracker/')
       })
     } else if (req.body.hasOwnProperty("update_id")) {
       console.log("update issue")
+     
+      var close = true;
+       console.log("req.body.open is: " + req.body.open)
+      if (req.body.open === undefined) {
+        console.log("trigger check mark-no check mark")
+        close = false;
+      } else if (req.body.open === false) {
+        console.log("trigger check mark - check mark")
+        close = true;
+      }   
+       console.log("closed: " + close)
+
+      issue.findById(req.body.update_id, {new: true }, function (err, iss) {
+        issue.findOneAndUpdate(
+          { _id: iss._id },
+          {
+            $set: {
+                title: req.body.create_issue_title,
+                comments: req.body.issue_text,
+                user: req.body.created_by,
+                assigned: req.body.assigned_to,
+                status: req.body.status_text,
+                closed: close
+            }
+          },
+          { new: true },
+          (err, docs) =>{
+            if (err) {
+              console.log("error: " + err);
+            } else {
+              console.log("success: " + docs);
+            }
+          
+          });
+       })
+      
+
     } else if (req.body.hasOwnProperty("delete_id")) {
       console.log("delete issue")
+      issue.findByIdAndDelete({ _id: req.body.delete_id }, function (err) {
+        if (err) {
+          console.log("error: " + err)       
+        } else {
+          console.log("successful deletion")
+        }
+      })
     }
    
     //console.log("create issue")
