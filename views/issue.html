@@ -46,7 +46,25 @@
       <input type="text" name="delete_id" placeholder="_id" style="width: 320px" required=''><br>
       <button type="submit">Delete Issue</button>
     </form>
-
+    <br />
+    <h3>Search issues on <i>apitest</i> must check to show fields</h3>
+    <form id="searchIssue" method="post" action="/api/issues/issueTracker/">
+      <input type="text" name="search_id" placeholder="(opt)_id" style="width: 320px">
+      <input type="checkbox" name="idCheck"><br>
+      <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 320px">
+      <input type="checkbox" name="titleCheck"><br>
+      <input type="text" name="issue_text" placeholder="(opt)Text" style="width: 320px;">
+      <input type="checkbox" name="textCheck"><br>
+      <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 320px">
+      <input type="checkbox" name="createdCheck"><br>
+      <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 320px">
+      <input type="checkbox" name="assignedCheck"><br>
+      <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 320px">
+      <input type="checkbox" name="statusCheck"><br>
+      <input type="text" name="open_issue" placeholder="(opt)open issue" style="width: 320px">
+      <input type="checkbox" name="openCheck"><br>
+      <button type="submit">Search Issue(s)</button>
+    </form>
     <div id='issueDisplay'></div>
 
     <hr style='margin: 50px; margin-top: 200px'>
