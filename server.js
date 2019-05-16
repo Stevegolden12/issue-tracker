@@ -36,7 +36,7 @@ var issueSchema = new Schema({
   user: String,
   assigned: String,
   status: String,
-  closed: Boolean
+  closed: String
 });
 
 var issue = mongoose.model('issues', issueSchema)
@@ -78,12 +78,12 @@ app.route('/api/issues/issueTracker/')
 
 
     } else if (req.body.hasOwnProperty("update_id")) {
-      var close = true;
+      var close = 'true';
       console.log("req.body.open is: " + req.body.open)
       if (req.body.open === undefined) {
-        close = false;
+        close = 'false';
       } else if (req.body.open === false) {
-        close = true;
+        close = 'true';
       }
 
 
@@ -126,17 +126,58 @@ app.route('/api/issues/issueTracker/')
       })
     } else if (req.body.hasOwnProperty("search_id")) {
       res.send("Searching in database")
+      console.log("Searching body: " + JSON.stringify(req.body))
+      console.log("Before req.body.idCheck: " + req.body.idCheck)
+       
+      function findChkBoolean(ChkObj) {
+        let newArray = [];
+        let ignoreVal;
+
+        ChkObj.idCheck === undefined ? ignoreVal = false : newArray.push('_id');
+        ChkObj.titleCheck === undefined ? ignoreVal = false : newArray.push('title');
+        ChkObj.textCheck === undefined ? ignoreVal = false : newArray.push('comments');
+        ChkObj.createdCheck === undefined ? ignoreVal = false : newArray.push('user');
+        ChkObj.assignedCheck === undefined ? ignoreVal = false : newArray.push('assigned');
+        ChkObj.statusCheck === undefined ? ignoreVal = false : newArray.push('status');
+        ChkObj.openCheck === undefined ? ignoreVal = false : newArray.push('closed');
+
+        return newArray
+      }
+      let chkObject = findChkBoolean(req.body)
+      let showFields = findChkBoolean(req.body).join(' ');
+      console.log("chkBool: " + showFields)
+
       //Going to go through the checkboxes and put in the '_id title' section below in find()
       issue.find({
-        _id: /./,
-        title: /./,
-        comments: /./,
-        user: /./,
-        assigned: /./,
-        status: /./,
-        closed: /./,
+        _id: req.body.search_id ? req.body.search_id : /./,
+        title: req.body.issue_title ? req.body.issue_title : /./,
+        comments: req.body.issue_text ? req.body.issue_text : /./,
+        user: req.body.created_by ? req.body.created_by : /./,
+        assigned: req.body.assigned_to ? req.body.assigned_to : /./,
+        status: req.body.status_text ? req.body.status_text : /./,
+        closed: req.body.open_issue ? req.body.open_issue : /./,
       },
-        '_id title', function (err, docs) { })
+        showFields, function (err, docs) {
+
+          /*
+           *
+           * 
+           * Make a function that checks all the fields if they are empty to if/else the response
+           * 
+           *   
+           */
+          console.log("DOCS in function: " + docs)
+          console.log("DOCS return value: " + (docs === 'undefined'))
+          console.log("check field: " )
+          /*
+           *
+          if (docs) {
+            res.json(docs);
+          } else {
+            res.send("There are no matching searches")
+          }          
+          */
+        })
     }
     
   })
