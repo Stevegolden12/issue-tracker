@@ -49,20 +49,32 @@
     <br />
     <h3>Search issues on <i>apitest</i> must check to show fields</h3>
     <form id="searchIssue" method="post" action="/api/issues/issueTracker/">
+      <label>Id</label>
       <input type="text" name="search_id" placeholder="(opt)_id" style="width: 320px">
-      <input type="checkbox" name="idCheck"><br>
+      <input type="checkbox" name="idCheck" checked><br>
+      <label>Title</label>
       <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 320px">
-      <input type="checkbox" name="titleCheck"><br>
-      <input type="text" name="issue_text" placeholder="(opt)Text" style="width: 320px;">
-      <input type="checkbox" name="textCheck"><br>
+      <input type="checkbox" name="titleCheck" checked><br>
+      <label>Description</label>
+      <input type="text" name="issue_text" placeholder="(opt)Issue Description" style="width: 320px;">
+      <input type="checkbox" name="textCheck" checked><br>
+      <label>Created</label>
       <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 320px">
-      <input type="checkbox" name="createdCheck"><br>
+      <input type="checkbox" name="createdCheck" checked><br>
+      <label>Assigned</label>
       <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 320px">
-      <input type="checkbox" name="assignedCheck"><br>
+      <input type="checkbox" name="assignedCheck" checked><br>
+      <label>Status code</label>
       <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 320px">
-      <input type="checkbox" name="statusCheck"><br>
-      <input type="text" name="open_issue" placeholder="(opt)open issue" style="width: 320px">
-      <input type="checkbox" name="openCheck"><br>
+      <input type="checkbox" name="statusCheck" checked><br>
+      <label>Open Issue</label>
+      <!--<input type="text" name="open_issue" placeholder="(opt)open issue" style="width: 320px"> -->
+      <select name="open_issue" placeholder="(opt)open issue" style="width: 324px">
+        <option value="" selected></option>
+        <option value="true">true</option>
+        <option value="false">false</option>
+      </select>
+      <input type="checkbox" name="openCheck" checked><br>
       <button type="submit">Search Issue(s)</button>
     </form>
     <div id='issueDisplay'></div>
