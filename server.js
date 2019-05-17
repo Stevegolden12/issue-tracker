@@ -89,11 +89,12 @@ app.route('/api/issues/issueTracker/')
 
       issue.findById(req.body.update_id, { new: true }, function (err, iss) {
         if (iss) {
+           console.log(req.body)
           issue.findOneAndUpdate(
             { _id: iss._id },
             {
               $set: {
-                title: req.body.create_issue_title,
+                title: req.body.issue_title,
                 comments: req.body.issue_text,
                 user: req.body.created_by,
                 assigned: req.body.assigned_to,
@@ -104,6 +105,7 @@ app.route('/api/issues/issueTracker/')
             { new: true },
             (err, docs) => {
               if (err) {
+              
               } else {
                 res.send("Successfully updated.")
               }
@@ -131,7 +133,7 @@ app.route('/api/issues/issueTracker/')
        
       function findChkBoolean(chkObj) {
         let newArray = [];
-        let ignoreVal;
+        let ignoreVal;       
 
         chkObj.idCheck === undefined ? ignoreVal = false : newArray.push('_id');
         chkObj.titleCheck === undefined ? ignoreVal = false : newArray.push('title');
