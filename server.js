@@ -125,27 +125,26 @@ app.route('/api/issues/issueTracker/')
         }
       })
     } else if (req.body.hasOwnProperty("search_id")) {
-      res.send("Searching in database")
+    
       console.log("Searching body: " + JSON.stringify(req.body))
-      console.log("Before req.body.idCheck: " + req.body.idCheck)
+     
        
-      function findChkBoolean(ChkObj) {
+      function findChkBoolean(chkObj) {
         let newArray = [];
         let ignoreVal;
 
-        ChkObj.idCheck === undefined ? ignoreVal = false : newArray.push('_id');
-        ChkObj.titleCheck === undefined ? ignoreVal = false : newArray.push('title');
-        ChkObj.textCheck === undefined ? ignoreVal = false : newArray.push('comments');
-        ChkObj.createdCheck === undefined ? ignoreVal = false : newArray.push('user');
-        ChkObj.assignedCheck === undefined ? ignoreVal = false : newArray.push('assigned');
-        ChkObj.statusCheck === undefined ? ignoreVal = false : newArray.push('status');
-        ChkObj.openCheck === undefined ? ignoreVal = false : newArray.push('closed');
+        chkObj.idCheck === undefined ? ignoreVal = false : newArray.push('_id');
+        chkObj.titleCheck === undefined ? ignoreVal = false : newArray.push('title');
+        chkObj.textCheck === undefined ? ignoreVal = false : newArray.push('comments');
+        chkObj.createdCheck === undefined ? ignoreVal = false : newArray.push('user');
+        chkObj.assignedCheck === undefined ? ignoreVal = false : newArray.push('assigned');
+        chkObj.statusCheck === undefined ? ignoreVal = false : newArray.push('status');
+        chkObj.openCheck === undefined ? ignoreVal = false : newArray.push('closed');
 
         return newArray
       }
       let chkObject = findChkBoolean(req.body)
       let showFields = findChkBoolean(req.body).join(' ');
-      console.log("chkBool: " + showFields)
 
       //Going to go through the checkboxes and put in the '_id title' section below in find()
       issue.find({
@@ -158,28 +157,18 @@ app.route('/api/issues/issueTracker/')
         closed: req.body.open_issue ? req.body.open_issue : /./,
       },
         showFields, function (err, docs) {
-
-          /*
-           *
-           * 
-           * Make a function that checks all the fields if they are empty to if/else the response
-           * 
-           *   
-           */
-          console.log("DOCS in function: " + docs)
-          console.log("DOCS return value: " + (docs === 'undefined'))
-          console.log("check field: " )
-          /*
-           *
-          if (docs) {
-            res.json(docs);
+         
+          
+          if (docs !== undefined && docs.length !== 0) {        
+            res.send(docs)
           } else {
-            res.send("There are no matching searches")
+            res.send("No searches returned")
+            //res.send("There are no matching searches")
           }          
-          */
+        
         })
     }
-    
+    //res.send("Searching in database")
   })
 
 
