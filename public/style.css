@@ -7,6 +7,10 @@ body {
   padding: 10px;
 }
 
+#projectTitle {
+  text-align: center;
+}
+
 .issue {
   margin: 20px;
   padding: 5px;
@@ -14,6 +18,9 @@ body {
   border: 2px solid black;
 }
 
+#closeIssueLabel {
+  width: auto;
+}
 
 .finished {
   color: lightgrey;
