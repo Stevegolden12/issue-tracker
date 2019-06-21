@@ -17,30 +17,34 @@
     <div id='submitNewIssue'>
     </div>
     <br>
-    <div>
-      <h3>Submit a new issue:</h3>
-    </div>
-    <!--Change id to "testIsusue" from "newIssue" because think script code below was not letting it work -->
-    <form id="createIssue" method="post" action="/api/issues/issueTracker/">
-      <input type="text" name="create_issue_title" placeholder="*Title" style="width: 320px; margin-bottom: 3px;" required=''><br>
-      <textarea type="text" name="issue_text" placeholder="*Text" style="width: 320px; height: 100px;" required=''></textarea><br>
-      <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''>
-      <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px">
-      <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-      <button type="submit">Submit Issue</button>
-    </form>
+    <section id="createAndUpdateForms"> 
+      <form id="createIssue" method="post" action="/api/issues/issueTracker/">
+        <fieldset>
+          <legend>Submit a new issue:</legend>
+          <input type="text" name="create_issue_title" placeholder="*Title" style="width: 320px; margin-bottom: 3px;" required=''><br>
+          <textarea type="text" name="issue_text" placeholder="*Text" style="width: 320px; height: 100px;" required=''></textarea><br>
+          <input type="text" name="created_by" placeholder="*Created by" style="width: 100px" required=''>
+          <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px">
+          <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
+          <button type="submit">Submit Issue</button>
+        </fieldset>
+      </form>    
+      <br>
+      <form id="updateIssue" method="post" action="/api/issues/issueTracker/">
+        <fieldset>
+          <legend>Update an issue (id is required):</legend>
+            <input type="text" name="update_id" placeholder="*_id" style="width: 320px" required=''><br>
+            <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 320px"><br>
+            <textarea type="text" name="issue_text" placeholder="(opt)Text" style="width: 320px; height: 100px"></textarea><br>
+            <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 100px">
+            <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px">
+            <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
+            <label id="closeIssueLabel"><input type="checkbox" name="open" value=false> Check to close issue</label><br>
+            <button type="submit">Update Issue</button>
+          </fieldset>
+      </form>
+    </section>
     <br>
-    <h3>Update an issue (id is required):</h3>
-    <form id="updateIssue" method="post" action="/api/issues/issueTracker/">
-      <input type="text" name="update_id" placeholder="*_id" style="width: 320px" required=''><br>
-      <input type="text" name="issue_title" placeholder="(opt)Title" style="width: 320px"><br>
-      <textarea type="text" name="issue_text" placeholder="(opt)Text" style="width: 320px; height: 100px"></textarea><br>
-      <input type="text" name="created_by" placeholder="(opt)Created by" style="width: 100px">
-      <input type="text" name="assigned_to" placeholder="(opt)Assigned to" style="width: 100px">
-      <input type="text" name="status_text" placeholder="(opt)Status text" style="width: 100px"><br>
-      <label id="closeIssueLabel"><input type="checkbox" name="open" value=false> Check to close issue</label><br>
-      <button type="submit">Update Issue</button>
-    </form><br>
     <h3>Delete issue:</h3>
     <form id="deleteIssue" method="post" action="/api/issues/issueTracker/">
       <input type="text" name="delete_id" placeholder="_id" style="width: 320px" required=''><br>

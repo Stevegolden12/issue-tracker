@@ -54,8 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.route('/api/issues/issueTracker/')
   .post(upload.array(), function (req, res, next) {
 
-    if (req.body.hasOwnProperty("create_issue_title")) {
-      console.log("create issue")
+    if (req.body.hasOwnProperty("create_issue_title")) {  
       var newIssue = new issue({
         _id: shortid.generate(),
         title: req.body.create_issue_title,
@@ -67,7 +66,6 @@ app.route('/api/issues/issueTracker/')
       })
 
       newIssue.save(newIssue, function (err, issue) {
-        console.log("ISSUE: " + issue._id)
         if (err) {
           res.send("Issue could not be created")
         }
@@ -79,7 +77,6 @@ app.route('/api/issues/issueTracker/')
 
     } else if (req.body.hasOwnProperty("update_id")) {
       var close = 'true';
-      console.log("req.body.open is: " + req.body.open)
       if (req.body.open === undefined) {
         close = 'false';
       } else if (req.body.open === false) {
@@ -89,7 +86,6 @@ app.route('/api/issues/issueTracker/')
 
       issue.findById(req.body.update_id, { new: true }, function (err, iss) {
         if (iss) {
-           console.log(req.body)
           issue.findOneAndUpdate(
             { _id: iss._id },
             {
@@ -128,9 +124,7 @@ app.route('/api/issues/issueTracker/')
       })
     } else if (req.body.hasOwnProperty("search_id")) {
     
-      console.log("Searching body: " + JSON.stringify(req.body))
-     
-       
+    
       function findChkBoolean(chkObj) {
         let newArray = [];
         let ignoreVal;       
