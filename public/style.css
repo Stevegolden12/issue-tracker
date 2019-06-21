@@ -11,6 +11,10 @@ body {
   text-align: center;
 }
 
+fieldset {
+  width: 350px;
+}
+
 .issue {
   margin: 20px;
   padding: 5px;
@@ -33,4 +37,33 @@ body {
 label {
   display: inline-block;
   width: 75px;
+}
+
+@media screen and (min-width: 768px) {
+  #createAndUpdateForms {
+    display: flex;
+    justify-content: center;
+  }
+
+  fieldset {
+    height: 230px;
+  }
+
+  #createIssue {
+    width: 50%;
+  }
+
+  #updateIssue {
+    width: 50%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  #createIssue {
+    width: 45%;
+  }
+
+  #updateIssue {
+    width: 45%;
+  }
 }
