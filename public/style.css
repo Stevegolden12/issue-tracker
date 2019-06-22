@@ -1,9 +1,15 @@
+:root {
+  --background-color: hsl(217, 89%, 76%);
+  --border-color: hsl(0, 100%, 0%)
+}
+
 * {
   margin: 0px;
   padding: 0px;
 }
 
 body {
+  background-color: var(--background-color);
   padding: 10px;
 }
 
@@ -13,13 +19,14 @@ body {
 
 fieldset {
   width: 350px;
+  border: 1px solid var(--border-color);
 }
 
 .issue {
   margin: 20px;
   padding: 5px;
   width: 60%;
-  border: 2px solid black;
+  border: 2px solid var(--border-color);
 }
 
 #closeIssueLabel {
