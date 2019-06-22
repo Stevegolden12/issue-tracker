@@ -171,7 +171,7 @@ app.route('/api/issues/issueTracker/')
 //Sample front-end
 app.route('/:project/')
   .get(function (req, res) { 
-     res.sendFile(process.cwd() + '/views/issue.html');
+     res.sendFile(process.cwd() + '/views/index.html');
   });
 
 //Index page (static HTML)
