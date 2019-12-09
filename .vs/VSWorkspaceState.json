@@ -4,8 +4,9 @@
     "\\public",
     "\\routes",
     "\\tests",
-    "\\views"
+    "\\views",
+    "\\views\\backup"
   ],
-  "SelectedNode": "\\public\\style.css",
+  "SelectedNode": "\\routes",
   "PreviewInSolutionExplorer": false
 }
