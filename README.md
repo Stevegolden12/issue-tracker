@@ -1,8 +1,16 @@
-#issue-tracker
+# issue-tracker
 
-Project Issue Tracker
+Single web page adding, updating, deleting, and searching through issues.
 
-1) SET NODE_ENV to `test` without quotes and set DB to your mongo connection string in .env file
-2) Complete the project in `routes/api.js` or by creating a handler/controller
-3) You will add any security features to `server.js`
-4) You will create all of the functional tests in `tests/2_functional-tests.js`
+## Installation
+
+Download the files [here](https://github.com/Stevegolden12/issue-tracker)
+
+Go into the root of the downloaded file folder
+Type: 'nodemon server.js'
+
+In the web browser of your choosing in the web address type: 'localhost: 3000'
+
+## Acknowledgement	
+
+Thank you to freeCodeCamp for helping me learn Express, MongoDB, and Mongoose.
